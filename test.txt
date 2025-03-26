@@ -1,0 +1,13 @@
+http://127.0.0.1:5000/auth/signup
+
+
+77CXSQQC7KHJ67PPJTUIGH37JIBJZLG3
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0Mjk2MzA4NywianRpIjoiNTc2NGY0MmEtYzI5Yy00MWI4LTgwM2ItYTQ3NzI4YjI2ZWQ5IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNzQyOTYzMDg3LCJjc3JmIjoiODdmOWMxNGUtZWFhMi00N2I4LWE3NDQtMzIwNThlYmFkMjAxIiwiZXhwIjoxNzQyOTYzNjg3fQ.rBJ3VZlmklka8GS03j52KqW45ypIyXkTznJcvAA3gr8
+{
+  "name": "Laptop",
+  "description": "Gaming laptop with RTX 3060",
+  "price": 1500.99,
+  "quantity": 5
+}
+
