@@ -86,7 +86,6 @@ awk '$9 ~ /^[45]/ {print $1}' "$LOG_FILE" | sort | uniq -c | sort -nr | head
 echo "21. Requests by file type:"
 awk '{print $7}' "$LOG_FILE" | grep -oE '\.[a-z]+$' | sort | uniq -c | sort -nr
 
-
 # 22. Count of HEAD requests
 echo "23. Total HEAD requests: $(grep '\"HEAD' "$LOG_FILE" | wc -l)"
 
@@ -97,5 +96,21 @@ awk '{s+=$10} END {print s}' "$LOG_FILE"
 # 24. Average bytes per request
 echo -n "25. Average bytes/request: "
 awk '{s+=$10; c++} END {print int(s/c)}' "$LOG_FILE"
+
+# 25. Trend of requests per day
+echo "25. Request Trend (graphical):"
+awk -F: '{print $1}' "$LOG_FILE" | awk '{gsub(/\[/, "", $4); print $4}' | sort | uniq -c |
+awk '{printf "%s: %s %s\n", $2, $1, gensub(/./, "=", "g", sprintf("%0*d", int($1/10000), 0))}'
+
+#  26. Failure requests per hour
+echo "26. Failed requests per hour:"
+awk '$9 ~ /^[45]/ {split($4,t,":"); gsub(/\[/, "", t[2]); print t[2]}' "$LOG_FILE" | sort | uniq -c | sort -nr
+
+# 27. GET vs POST per IP (Top 10)
+echo "27. Requests per IP - GET vs POST (Top 10):"
+awk '$6 ~ /"GET/ {print $1}' "$LOG_FILE" | sort | uniq -c | awk '{print $2, $1}' > get_counts.tmp
+awk '$6 ~ /"POST/ {print $1}' "$LOG_FILE" | sort | uniq -c | awk '{print $2, $1}' > post_counts.tmp
+join -a1 -a2 -e 0 -o 1.1 1.2 2.2 <(sort get_counts.tmp) <(sort post_counts.tmp) | sort -k2,2nr | head -10
+
 
 echo "==================================================="
